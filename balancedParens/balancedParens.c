@@ -2,36 +2,38 @@
 #include <string.h>
 
 #define MAXLEN 101 // Want 15 characters but must account for \0 terminator
-#define FALSE 0
-#define TRUE !FALSE
+
+typedef enum
+{
+  FALSE,
+  TRUE
+} bool;
 
 char stack[MAXLEN] = {'\0'};
 int top = -1;
 void push(char ch);
 void pop();
-int isEmpty();
-int arePair(char opening, char closing);
-int areParanthesesBalanced();
+bool isEmpty();
+bool arePair(char opening, char closing);
+bool areParanthesesBalanced();
 void display();
 
 int
 main(void)
 {
-  puts("Enter term:");
-  //push(a);
-  //push(a);
-  printf("match %d\n", areParanthesesBalanced());
+  fputs("Enter an expression: ", stdout);
 
+  if (areParanthesesBalanced())
+    printf("All opening brackets are closed.");
+  else
+    printf("Not all opening brackets are closed");
   return 0;
 }
 
 void
 push(char ch)
 {
-  stack[++top] = ch;
-  printf("Top is %d\n", top);
-
-  return;
+  stack[++top] = ch; return;
 }
 
 void
@@ -39,42 +41,51 @@ pop()
 {
   stack[top] = '\0';
   --top;
-  printf("popped: top is %d\n", top);
 }
 
-int
+bool
 isEmpty()
 {
+  bool is_empty = TRUE;
+  bool not_empty = FALSE;
+
   if (stack[top] == '\0')
-    return TRUE;
+    return is_empty;
   else
-    return FALSE;
+    return not_empty;
 }
 
-int
+bool
 arePair(char opening,char closing)
 {
-  if(opening == '(' && closing == ')') return TRUE;
-  else if(opening == '{' && closing == '}') return TRUE;
-  else if(opening == '[' && closing == ']') return TRUE;
-  return FALSE;
+  bool is_matched = TRUE;
+  bool not_matched = FALSE;
+
+  if(opening == '(' && closing == ')') return is_matched;
+  else if(opening == '{' && closing == '}') return is_matched;
+  else if(opening == '[' && closing == ']') return is_matched;
+  return not_matched;
 }
 
-int areParanthesesBalanced()
+bool
+areParanthesesBalanced()
 {
   char expr[MAXLEN];
   scanf(" %100[^\n]s", expr);
-  printf("characters %c\n", expr[0]);
+
   for ( int i = 0; i < MAXLEN -1; i++)
     {
       if(expr[i] == '(' || expr[i] == '{' || expr[i] == '[')
         push(expr[i]);
+
       else if(expr[i] == ')' || expr[i] == '}' || expr[i] == ']')
         {
           if(isEmpty() || !arePair(stack[top],expr[i]))
             return FALSE;
+
           else
             pop();
+
           if (isEmpty() && expr[i+1] == '\0')
             return TRUE;
         }
