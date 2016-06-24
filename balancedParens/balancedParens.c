@@ -71,7 +71,7 @@ bool
 areParanthesesBalanced()
 {
   char expr[MAXLEN];
-  scanf(" %100[^\n]s", expr);
+  scanf(" %100[^\n]s", expr); // the [^\n] allows spaces to be picked up
 
   for ( int i = 0; i < MAXLEN -1; i++)
     {
