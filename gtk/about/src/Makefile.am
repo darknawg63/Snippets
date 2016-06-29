@@ -1,0 +1,5 @@
+bin_PROGRAMS=about
+about_SOURCES=about.c
+
+LDADD=@GTK_LIBS@
+AM_CFLAGS=@GTK_CFLAGS@
