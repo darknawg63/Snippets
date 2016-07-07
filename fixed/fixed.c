@@ -8,7 +8,7 @@ int main(void)
 
   printf ("Input your number: ");
 
-  while (scanf("%d", &temp) != 1)
+  while (scanf("%3d", &temp) != 1)
     {
       while (getchar() != '\n');
       printf ("Try again: ");
